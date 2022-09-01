@@ -15,7 +15,9 @@ public class CaballeroController : MonoBehaviour
     const int ANI_CAMINAR = 2;
     const int ANI_SALTO = 3;
     const int ANI_ATAQUE = 4;
-    bool puedeSaltar = true;
+    bool puedeSaltar = true, puedeSaltar2 = true;
+    Vector3 lastCheckpointPosition;
+    bool check = true;
     void Start()
     {
         Debug.Log("Iniciando script de player");
@@ -57,15 +59,44 @@ public class CaballeroController : MonoBehaviour
             rb.velocity = new Vector2(0, rb.velocity.y);
             ChangeAnimation(ANI_QUIETO);
         }
-        if(Input.GetKeyDown(KeyCode.Space) && puedeSaltar==true){
+        if(Input.GetKeyDown(KeyCode.Space) && puedeSaltar2==true){
             //rb.velocity = new Vector2(rb.velocity.x, velSalto);
-            rb.AddForce(new Vector2(0, velSalto), ForceMode2D.Impulse);
-            ChangeAnimation(ANI_SALTO);
-            puedeSaltar = false;    
+            if(puedeSaltar==false){
+                rb.AddForce(new Vector2(0, velSalto), ForceMode2D.Impulse);
+                ChangeAnimation(ANI_SALTO);
+                puedeSaltar2=false;
+            }else{
+                rb.AddForce(new Vector2(0, velSalto), ForceMode2D.Impulse);
+                ChangeAnimation(ANI_SALTO);
+                puedeSaltar = false; 
+            } 
+               
         }
     }
     void OnCollisionEnter2D(Collision2D other){
         puedeSaltar = true;
+        puedeSaltar2 = true;
+        if(other.gameObject.name =="DarkHole")//para colisionar con el piso de fondo
+        {
+            if(lastCheckpointPosition != null)
+                {
+                    transform.position = lastCheckpointPosition;
+                }
+            
+        } 
+    }
+    void OnTriggerEnter2D(Collider2D other)//para reconocer el checkponit(transparente)
+    {
+        if(other.gameObject.name == "SignArrow" && check == true){
+            Debug.Log("Trigger");//aplicar la pocion isTrigger en la configuracion
+            lastCheckpointPosition = transform.position;
+        }
+        else if(other.gameObject.name == "Sign"){
+            Debug.Log("Trigger");//aplicar la pocion isTrigger en la configuracion
+            lastCheckpointPosition = transform.position;
+            check=false;
+        }
+        
     }
     private void ChangeAnimation(int a){
         animator.SetInteger("Estado", a);
