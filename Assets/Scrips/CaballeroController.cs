@@ -9,18 +9,22 @@ public class CaballeroController : MonoBehaviour
     SpriteRenderer sr;
     Animator animator;
     Collider2D cl;
+    public GameObject bullet;
+    private GameManagerController gameManager;
     // Start is called before the first frame update
     const int ANI_QUIETO = 0;
     const int ANI_CORRER = 1;
     const int ANI_CAMINAR = 2;
     const int ANI_SALTO = 3;
     const int ANI_ATAQUE = 4;
+    const int ANI_MUERTE = 5;
     bool puedeSaltar = true, puedeSaltar2 = true;
     Vector3 lastCheckpointPosition;
-    bool check = true;
+    bool check = true, muerto=false;
     void Start()
     {
         Debug.Log("Iniciando script de player");
+        gameManager = FindObjectOfType<GameManagerController>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
         animator = GetComponent<Animator>();
@@ -30,34 +34,21 @@ public class CaballeroController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(Input.GetKey(KeyCode.RightArrow)){
-            sr.flipX = false;
-            if(Input.GetKey("x")){
-                rb.velocity = new Vector2(velocityCorr, rb.velocity.y);
-                ChangeAnimation(ANI_CORRER);
-            }else{
-                rb.velocity = new Vector2(velocityCam, rb.velocity.y);
-                ChangeAnimation(ANI_CAMINAR);
+        if(muerto==false){
+            Debug.Log("Camina");
+            rb.velocity = new Vector2(velocityCam, rb.velocity.y);
+            ChangeAnimation(ANI_CAMINAR);
+        }else ChangeAnimation(ANI_MUERTE);
+        
+        if(Input.GetKeyDown("c")){
+            if(gameManager.bullet>0){
+                var bulletPosition = transform.position + new Vector3(1,0,0);
+                var o = Instantiate(bullet, bulletPosition, Quaternion.identity) as GameObject;
+                var c = o.GetComponent<BulletController>();
+                gameManager.GastarBala();
             }
+            else Debug.Log("No tienes balas");
             
-        }
-        else if(Input.GetKey(KeyCode.LeftArrow)){
-            sr.flipX = true;
-            if(Input.GetKey("x")){
-                rb.velocity = new Vector2(-velocityCorr, rb.velocity.y);
-                ChangeAnimation(ANI_CORRER);
-            }else{
-                rb.velocity = new Vector2(-velocityCam, rb.velocity.y);
-                ChangeAnimation(ANI_CAMINAR);
-            }
-        }
-        else if(Input.GetKey("z")){
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            ChangeAnimation(ANI_ATAQUE);
-        }
-        else{
-            rb.velocity = new Vector2(0, rb.velocity.y);
-            ChangeAnimation(ANI_QUIETO);
         }
         if(Input.GetKeyDown(KeyCode.Space) && puedeSaltar2==true){
             //rb.velocity = new Vector2(rb.velocity.x, velSalto);
@@ -76,6 +67,11 @@ public class CaballeroController : MonoBehaviour
     void OnCollisionEnter2D(Collision2D other){
         puedeSaltar = true;
         puedeSaltar2 = true;
+        if(other.gameObject.tag == "Enemy"){
+            muerto=true;
+            Debug.Log("Estas muerto");
+
+        }
         if(other.gameObject.name =="DarkHole")//para colisionar con el piso de fondo
         {
             if(lastCheckpointPosition != null)
