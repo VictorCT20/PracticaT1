@@ -34,7 +34,7 @@ public class BulletController : MonoBehaviour
         if(other.gameObject.tag =="Enemy")//para colisionar con el piso de fondo
         {
             Destroy(other.gameObject);
-            //gameManager.GastarBala();
+            gameManager.GanarPuntos(10);
         } 
         Destroy(this.gameObject);
     }

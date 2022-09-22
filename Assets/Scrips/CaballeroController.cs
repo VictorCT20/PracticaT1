@@ -4,15 +4,15 @@ using UnityEngine;
 
 public class CaballeroController : MonoBehaviour
 {
-    public int velocityCam = 3, velocityCorr = 7, velSalto = 3;
+    //public int velocityCam = 3, velocityCorr = 7, velSalto = 3;
     Rigidbody2D rb;
     SpriteRenderer sr;
     Animator animator;
     Collider2D cl;
-    public GameObject bullet;
+    //public GameObject bullet;
     private GameManagerController gameManager;
     // Start is called before the first frame update
-    const int ANI_QUIETO = 0;
+    /*const int ANI_QUIETO = 0;
     const int ANI_CORRER = 1;
     const int ANI_CAMINAR = 2;
     const int ANI_SALTO = 3;
@@ -20,7 +20,7 @@ public class CaballeroController : MonoBehaviour
     const int ANI_MUERTE = 5;
     bool puedeSaltar = true, puedeSaltar2 = true;
     Vector3 lastCheckpointPosition;
-    bool check = true, muerto=false;
+    bool check = true, muerto=false;*/
     void Start()
     {
         Debug.Log("Iniciando script de player");
@@ -34,6 +34,7 @@ public class CaballeroController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+        /*
         if(muerto==false){
             Debug.Log("Camina");
             rb.velocity = new Vector2(velocityCam, rb.velocity.y);
@@ -63,7 +64,9 @@ public class CaballeroController : MonoBehaviour
             } 
                
         }
+        */
     }
+    /*
     void OnCollisionEnter2D(Collision2D other){
         puedeSaltar = true;
         puedeSaltar2 = true;
@@ -97,6 +100,6 @@ public class CaballeroController : MonoBehaviour
     private void ChangeAnimation(int a){
         animator.SetInteger("Estado", a);
     }
-
+    */
 
 }
