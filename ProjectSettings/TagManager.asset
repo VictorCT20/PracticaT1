@@ -9,6 +9,8 @@ TagManager:
   - Plata
   - Bronce
   - barrera
+  - Kunai
+  - Espada
   layers:
   - Default
   - TransparentFX
