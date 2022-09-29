@@ -23,7 +23,7 @@ public class MegamanController : MonoBehaviour
     const int ANI_CORRER = 1;
     const int ANI_SALTO = 2;
     const int ANI_DISPARAR = 3;
-    int direction = 2;
+    int direction = 1;
     int cont;
     bool disparo = false;
     // Start is called before the first frame update
@@ -82,21 +82,21 @@ public class MegamanController : MonoBehaviour
                 var bulletPosition = transform.position + new Vector3(direction,0,0);
                 var o = Instantiate(bulletG, bulletPosition, Quaternion.identity) as GameObject;
                 var c = o.GetComponent<BulletsController>();
-                if(direction==-2) c.SetLeftDirection();
+                if(direction==-1) c.SetLeftDirection();
                 else c.SetRightDirection();
             }
             else if(timer>BalaMediana && disparo == true){
                 var bulletPosition = transform.position + new Vector3(direction,0,0);
                 var o = Instantiate(bulletM, bulletPosition, Quaternion.identity) as GameObject;
                 var c = o.GetComponent<BulletsController>();
-                if(direction==-2) c.SetLeftDirection();
+                if(direction==-1) c.SetLeftDirection();
                 else c.SetRightDirection();
             }
             else if(disparo == true){
                 var bulletPosition = transform.position + new Vector3(direction,0,0);
                 var o = Instantiate(bulletP, bulletPosition, Quaternion.identity) as GameObject;
                 var c = o.GetComponent<BulletsController>();
-                if(direction==-2) c.SetLeftDirection();
+                if(direction==-1) c.SetLeftDirection();
                 else c.SetRightDirection();
             }
     }

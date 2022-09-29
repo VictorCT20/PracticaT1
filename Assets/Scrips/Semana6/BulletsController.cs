@@ -30,7 +30,7 @@ public class BulletsController : MonoBehaviour
         rb.velocity = new Vector2(velocity, 0);
     } 
     void OnCollisionEnter2D(Collision2D other){
-        if(other.gameObject.name !="Megaman")//para colisionar con el piso de fondo
+        if(other.gameObject.name !="Ninja") 
         {
             Destroy(this.gameObject);
         } 
