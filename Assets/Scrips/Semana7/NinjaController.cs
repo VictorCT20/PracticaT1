@@ -116,9 +116,15 @@ public class NinjaController : MonoBehaviour
         var bulletPosition = transform.position + new Vector3(direction,0,0);
         var o = Instantiate(Kunai, bulletPosition, Quaternion.identity) as GameObject;
         var c = o.GetComponent<BulletsController>();
-        if(direction==-1) c.SetLeftDirection();
-        else c.SetRightDirection();
-        
+        var t = c.GetComponent<SpriteRenderer>();
+        if(direction==-1){
+            t.transform.Rotate(0, 0, 90); 
+            c.SetLeftDirection();
+        } 
+        else {
+            t.transform.Rotate(0, 0, -90); 
+            c.SetRightDirection();
+        }
     }
     void OnCollisionEnter2D(Collision2D other){
         cont=salto;

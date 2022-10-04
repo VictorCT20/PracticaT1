@@ -10,20 +10,33 @@ public class GameObjectController : MonoBehaviour
     private int score = 0;
     public int TipoAtaque = 1;
     private float timer = 0.0f;
-    private float timer2 = 2.0f;
-    private GameObject zombie;
+    private float timer2 = 4.0f;
+    public GameObject zombie;
+    bool nu = true;
     void Start()
     {
         
     }
     void Update(){
+        crearZombie();
+    }
+    void crearZombie(){
+        if(nu){
+            timer2 = Random.Range(3, 6);
+            Debug.Log("Timer2 = " + timer2);
+            nu = false;
+        }
+        
         timer += Time.deltaTime;
-        Debug.Log(timer);
-        if(timer ==2.0f){
+        //Debug.Log(timer);
+        if(timer >= timer2){
             timer = 0.0f;
-            var zombiePosition = new Vector3(-2,-2,0);
+            float po =  Random.Range(-2.0f, 18.0f);
+            Debug.Log("po = " + po);
+            var zombiePosition = new Vector3(po,-2,0);
             var o = Instantiate(zombie, zombiePosition, Quaternion.identity) as GameObject;
             var c = o.GetComponent<Zombie2Controller>();
+            nu=true;
         }
     }
 
