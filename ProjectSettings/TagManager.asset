@@ -11,6 +11,9 @@ TagManager:
   - barrera
   - Kunai
   - Espada
+  - Banner
+  - escalera
+  - Portal
   layers:
   - Default
   - TransparentFX

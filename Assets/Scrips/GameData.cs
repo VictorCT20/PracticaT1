@@ -9,4 +9,6 @@ public class GameData{
     public int MonedaOro{get;set;}
     public int MonedaPlata{get;set;}
     public int MonedaBronce{get;set;}
+    public float posX {get;set;}
+    public float posY {get;set;}
 }

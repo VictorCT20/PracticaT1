@@ -5,14 +5,14 @@ using UnityEngine;
 public class Zombie2Controller : MonoBehaviour
 {
     float velocity = 3;
-    int vida = 2;
+    int vida = 1;
     Rigidbody2D rb;
     SpriteRenderer sr;
-    private GameObjectController gameManager;
+    private ManagerController gameManager;
 
     void Start()
     {
-        gameManager = FindObjectOfType<GameObjectController>();
+        gameManager = FindObjectOfType<ManagerController>();
         rb = GetComponent<Rigidbody2D>();
         sr = GetComponent<SpriteRenderer>();
     }
@@ -21,7 +21,7 @@ public class Zombie2Controller : MonoBehaviour
     {
         if(vida<1){
             Destroy(this.gameObject);
-            gameManager.MatarZobie(1);
+            gameManager.MatarZombie(1);
         }
         rb.velocity = new Vector2(-velocity, rb.velocity.y);//hace que el zombie camine
     }
@@ -43,5 +43,11 @@ public class Zombie2Controller : MonoBehaviour
         if(other.gameObject.tag == "Espada"){
             vida = vida - 2;
         }
+
+        if(other.gameObject.name =="DarkHole")//para colisionar con el piso de fondo
+        {
+            Destroy(this.gameObject);
+        } 
+
     }
 }
